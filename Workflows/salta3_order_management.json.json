@@ -1,0 +1,328 @@
+{
+  "name": "Salta3 Orders",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Salta3 Orders",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Item",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Cheese Berger"
+                  },
+                  {
+                    "option": "Honey Mustard Berger"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Name"
+            },
+            {
+              "fieldLabel": "Phone number",
+              "fieldType": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -500,
+        -80
+      ],
+      "id": "a3f2a5f4-f990-4c66-8d9f-cb1a5adbbf0d",
+      "name": "On form submission",
+      "webhookId": "0fcdb2cf-b0bd-4a65-90e3-cd5fb5021893"
+    },
+    {
+      "parameters": {
+        "chatId": "2055330450",
+        "text": "=Hi Spong,\nWe have new order:\nItem: {{ $('On form submission').item.json.Item }}\nFrom: {{ $('On form submission').item.json.Name}}\nOrder Number: {{ $json['Last Number'] }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -20,
+        -180
+      ],
+      "id": "15fd0c81-722f-4be8-86f4-e3400dc84b3a",
+      "name": "Telegram1",
+      "webhookId": "defb5d28-e060-4174-9895-e1a347d0d853",
+      "credentials": {
+        "telegramApi": {
+          "id": "rxEG7XWuL3VhemfA",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1B9i7h3G3TM2JnIPxDYrgPvOoWcg16wyDh4CaTDvAYWI",
+          "mode": "list",
+          "cachedResultName": "Salta3_Orders",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1B9i7h3G3TM2JnIPxDYrgPvOoWcg16wyDh4CaTDvAYWI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1B9i7h3G3TM2JnIPxDYrgPvOoWcg16wyDh4CaTDvAYWI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Item": "={{ $('On form submission').item.json.Item }}",
+            "Time": "={{ new Date($('On form submission').item.json.submittedAt).toLocaleTimeString('en-GB') }}",
+            "For": "={{ $('On form submission').item.json.Name }}",
+            "Phone": "={{ $('On form submission').item.json['Phone number'] }}",
+            "Status": "In kitchen",
+            "Order Number": "={{ $json['Last Number'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Time",
+              "displayName": "Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Item",
+              "displayName": "Item",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Order Number",
+              "displayName": "Order Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "For",
+              "displayName": "For",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -20,
+        20
+      ],
+      "id": "06f5752d-4a1d-4d99-8352-13147c07e615",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aMX7qPxgbMpl6a1i",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1B9i7h3G3TM2JnIPxDYrgPvOoWcg16wyDh4CaTDvAYWI",
+          "mode": "list",
+          "cachedResultName": "Salta3_Orders",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1B9i7h3G3TM2JnIPxDYrgPvOoWcg16wyDh4CaTDvAYWI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1840895570,
+          "mode": "list",
+          "cachedResultName": "Sheet 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1B9i7h3G3TM2JnIPxDYrgPvOoWcg16wyDh4CaTDvAYWI/edit#gid=1840895570"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -300,
+        -80
+      ],
+      "id": "d6cf61ce-1ac9-4c2e-ad7c-6bd39c535a18",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aMX7qPxgbMpl6a1i",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1B9i7h3G3TM2JnIPxDYrgPvOoWcg16wyDh4CaTDvAYWI",
+          "mode": "list",
+          "cachedResultName": "Salta3_Orders",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1B9i7h3G3TM2JnIPxDYrgPvOoWcg16wyDh4CaTDvAYWI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1840895570,
+          "mode": "list",
+          "cachedResultName": "Sheet 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1B9i7h3G3TM2JnIPxDYrgPvOoWcg16wyDh4CaTDvAYWI/edit#gid=1840895570"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "2",
+            "Last Number": "={{ $json['Order Number']+1 }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Last Number",
+              "displayName": "Last Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        140,
+        20
+      ],
+      "id": "d748123b-2f9b-401d-a1ff-240222352eaf",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aMX7qPxgbMpl6a1i",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6b05f72f-fed5-4e01-ab77-2e8983d251b9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9391b53bec7fcddd458ac0fcaee94a8b7be294a387810445130723719a180e98"
+  },
+  "id": "1swtzYrCYVWvBYnf",
+  "tags": []
+}
