@@ -1,0 +1,263 @@
+{
+  "name": "Salta3 stock",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        -40
+      ],
+      "id": "00e65b24-b9db-4b18-b3b4-41b101ba5c5e",
+      "name": "Telegram Trigger",
+      "webhookId": "664096bb-b856-43fc-8110-a56b955f7ea4",
+      "credentials": {
+        "telegramApi": {
+          "id": "i5NYvVJVF8dgZB6p",
+          "name": "Salta3 Stock Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "for item in _input.all():\n    text = item.json.message.text\n    parts = text.strip().split()\nparts = text.split()\nname = parts[0]\nQuantity = int(parts[1])\n\nitem.json[\"Item_Name\"] = name\nitem.json[\"Item_Quantity\"] = Quantity\nreturn _input.all()\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -300,
+        -40
+      ],
+      "id": "b320df0e-b4db-4f3c-bbd3-b3b19966fcd9",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1UEjMprwXfq_Ckl1t3AWOBH8kGk_oR9eaLuWsWbLU4lg",
+          "mode": "list",
+          "cachedResultName": "Salta3- Stock",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UEjMprwXfq_Ckl1t3AWOBH8kGk_oR9eaLuWsWbLU4lg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UEjMprwXfq_Ckl1t3AWOBH8kGk_oR9eaLuWsWbLU4lg/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Item",
+              "lookupValue": "={{ $json.Item_Name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -120,
+        -40
+      ],
+      "id": "d5dfbb10-3adc-4ae7-bce1-bf9a1bc53bf1",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aMX7qPxgbMpl6a1i",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1UEjMprwXfq_Ckl1t3AWOBH8kGk_oR9eaLuWsWbLU4lg",
+          "mode": "list",
+          "cachedResultName": "Salta3- Stock",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UEjMprwXfq_Ckl1t3AWOBH8kGk_oR9eaLuWsWbLU4lg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UEjMprwXfq_Ckl1t3AWOBH8kGk_oR9eaLuWsWbLU4lg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $json.ID }}",
+            "Quantity": "={{ $json.Quantity + $('Code').item.json.Item_Quantity }}",
+            "Unit": "={{ $json.Unit }}",
+            "Item": "={{ $json.Item }}"
+          },
+          "matchingColumns": [
+            "Item"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Item",
+              "displayName": "Item",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Unit",
+              "displayName": "Unit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        40,
+        -40
+      ],
+      "id": "f34635f6-466c-4039-b542-0c658faf924b",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aMX7qPxgbMpl6a1i",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Hi Shafeeq, we have updated  {{ $('Google Sheets').item.json.Item }},\nNow we have {{ $json.Quantity }} {{ $json.Item }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        200,
+        -40
+      ],
+      "id": "0cfd1672-093b-4056-848b-249b500086b9",
+      "name": "Telegram",
+      "webhookId": "8b95b1a3-d4fe-4212-8ca7-1de38258c0c4",
+      "credentials": {
+        "telegramApi": {
+          "id": "dZVDq2ANX0SFtnfl",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e8378067-11cd-471d-ba08-c7ab1e89a421",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9391b53bec7fcddd458ac0fcaee94a8b7be294a387810445130723719a180e98"
+  },
+  "id": "qyJjfLk9JP0zJ8Hm",
+  "tags": []
+}
