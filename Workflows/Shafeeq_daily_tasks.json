@@ -1,1 +1,142 @@
-
+{
+  "name": "Shafeeq task",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e5fc577e-d6c2-44da-9a64-f35737c19c5c",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "sendTo": "Menatallhsaad@gmail.com",
+        "subject": "Your Tasks",
+        "emailType": "text",
+        "message": "=Here are your tasks\n\n{{ $json.Task_text }}\n\nThanks,\nMr.Salta3\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        0
+      ],
+      "id": "a8373d88-9cab-4254-8fd6-7ce755c275b1",
+      "name": "Gmail",
+      "webhookId": "d9cd57a8-675b-49e8-9396-ebd2429b157d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "SbimgTcgsn8pozUE",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1xpw4AvFqm4YmZU37s3eHTI_kMQykZ38OUwnoBKsKNWU",
+          "mode": "list",
+          "cachedResultName": "Shafeeq task",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xpw4AvFqm4YmZU37s3eHTI_kMQykZ38OUwnoBKsKNWU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xpw4AvFqm4YmZU37s3eHTI_kMQykZ38OUwnoBKsKNWU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "c15d2805-1cd8-47a5-ac21-eac00e4f60f7",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aMX7qPxgbMpl6a1i",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "# Loop over input items and add a new field called 'myNewField' to the JSON of each otasT \nTask = []\nfor item in _input.all():\n    Task.append(item.json['Task'])\n\n# Join tasks with a newline between them\nTask_text = '\\n'.join(Task)\n\n# Return the result in the expected format (as a new item)\nreturn [{\n    \"json\": {\n        \"Task_text\": Task_text\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "97679226-7257-42d4-b83a-bcd727bd3490",
+      "name": "Code"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8e2bbc30-8b81-4bbe-b3ae-dd81d037638a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9391b53bec7fcddd458ac0fcaee94a8b7be294a387810445130723719a180e98"
+  },
+  "id": "1QbOXUyPUBdZMuv5",
+  "tags": []
+}
