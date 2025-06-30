@@ -1,0 +1,184 @@
+{
+  "name": "Orders flow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Orders",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "placeholder": "Your name"
+            },
+            {
+              "fieldLabel": "Order",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Cheese Berger"
+                  },
+                  {
+                    "option": "Honey mustard Berger"
+                  },
+                  {
+                    "option": "Hot sauce Berger "
+                  }
+                ]
+              },
+              "multiselect": true
+            },
+            {
+              "fieldLabel": "Price",
+              "fieldType": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -400,
+        -100
+      ],
+      "id": "46bdf586-2239-4c22-ba0d-86524220cca5",
+      "name": "On form submission",
+      "webhookId": "a8890418-747c-4e86-819c-7a38513a80b0"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1dNoFXnTV54_lDzFUgqIHhgHlQvWWbw1HjanZTXwCnwg",
+          "mode": "list",
+          "cachedResultName": "Salta3 Orders",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dNoFXnTV54_lDzFUgqIHhgHlQvWWbw1HjanZTXwCnwg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dNoFXnTV54_lDzFUgqIHhgHlQvWWbw1HjanZTXwCnwg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Order": "={{ $json.Order }}",
+            "Name": "={{ $json.Name }}",
+            "Price": "={{ $json.Price }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Order",
+              "displayName": "Order",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "1d26679f-00b6-4d6e-b007-8c8fdfbf060e",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aMX7qPxgbMpl6a1i",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "Menatallhsaad@gmail.com",
+        "subject": "=New Order from {{ $json.Name }}",
+        "message": "=Order is:  {{ $json.Order }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        220,
+        -160
+      ],
+      "id": "0172ed4c-aeaf-4a97-868b-d2ef631f7aba",
+      "name": "Gmail",
+      "webhookId": "b46b8102-a9aa-41b0-9063-332d1cf531f6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "SbimgTcgsn8pozUE",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c967c79e-7eac-4b89-921e-85dc98c8348f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9391b53bec7fcddd458ac0fcaee94a8b7be294a387810445130723719a180e98"
+  },
+  "id": "WYFKjYBLZAHa7HbF",
+  "tags": []
+}
