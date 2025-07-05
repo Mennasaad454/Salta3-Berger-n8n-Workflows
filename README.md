@@ -24,4 +24,5 @@ This repo documents automation workflows designed to simplify their daily operat
 | `salta3_stock_management.json`        | Shafeeq reports stock updates via Telegram; it updates the stock Google Sheet and sends a confirmation message back. | Telegram API, Google Sheets |
 | `salta3_order_management.json`        | Shafeeq fills out an order form; the order is sent to Sponge via Telegram, added to `Salta3 Orders` Google Sheet, and updates the last order number. | Telegram API, Google Sheets |
 | `kitchen_response_system.json`        | Sponge updates an order’s status via Telegram. If marked “Done”, it updates the Google Sheet and subtracts used ingredients from stock. | Code node, Telegram API, Google Sheets |
+| `AI_Telegram_Bot.json`                | AI-powered Telegram assistant that responds to customer inquiries about the menu, takes burger orders, confirms details, and logs orders to Google Sheets. | Telegram API, OpenAI GPT-4, Google Sheets |
 ---
